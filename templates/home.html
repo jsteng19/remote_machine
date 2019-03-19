@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+  <head>
+    <meta charset = "utf-8"/>
+  </head>
+    <body>
+<!-- Start of Scrolling JS -->
+    <script>
+  var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+  disableScroll();
+  var body = document.body,
+    html = document.documentElement;
+
+var height = Math.max( body.scrollHeight, body.offsetHeight,
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+  function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault)
+      e.preventDefault();
+      e.returnValue = false;
+  }
+  function pageScrollUp(){
+    setTimeout(window.scrollBy(0,-1*height),100);
+  }
+  function pageScroll() {
+    if(document.getElementById("file1").classList.contains('active')){
+      setTimeout(window.scrollBy(0,height),100);
+      uploadRemoveColor();
+    }
+    else if(document.getElementById("file2").classList.contains('active')){
+      setTimeout(window.scrollBy(0,height),100);
+      uploadRemoveColor();
+    }
+    else if(document.getElementById("file3").classList.contains('active')){
+      setTimeout(window.scrollBy(0,height),100);
+      uploadRemoveColor();
+    }
+    else if(document.getElementById("file4").classList.contains('active')){
+      setTimeout(window.scrollBy(0,height),100);
+      uploadRemoveColor();
+    }
+    else{
+      alert("No file selected to run.");
+    }
+
+  }
+  function preventDefaultForScrollKeys(e) {
+    if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+    }
+  }
+
+  function disableScroll() {
+    if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+      window.onwheel = preventDefault; // modern standard
+      window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+      window.ontouchmove  = preventDefault; // mobile
+      document.onkeydown  = preventDefaultForScrollKeys;
+  }
+  </script>
+
+<!-- Eanble Scrolling Button -->
+
+<!-- Console Div -->
+
+<div class = "absolute">
+    <a href = "#" class = "button2" onclick = "pageScrollUp();" id = "Back">exit</a>
+  <ul class="console">
+      <li>Interactive console</li>
+      <li> TYpED STUFF</li>
+      <li>LiNe TwO</li>
+  </ul>
+  <div class="cursor">
+  >>> <input type="text" class="rq-form-element" style="background: black; color: white; font-family: monospace; padding: 1ex; caret-shape: underscore;"/>
+  <i></i>
+  </div>
+
+</div>
+
+<!-- Arrow Div -->
+
+
+
+<!-- Enable Scrolling On Button Click -->
+
+  <script type = "text/javascript">
+    document.getElementById("upload").onclick = function() {
+  enableScroll();
+    document.getElementById("upload").onclick = function() {
+    enableScroll();
+    document.getElementById("status").innerHTML = "enabled";
+    document.getElementById("status").className = "enabled";
+};
+
+    function enableScroll() {
+      if (window.removeEventListener)
+      window.removeEventListener('DOMMouseScroll', preventDefault, false);
+      window.onmousewheel = document.onmousewheel = null;
+      window.onwheel = null;
+      window.ontouchmove = null;
+      document.onkeydown = null;
+}
+}
+
+function changeColor(buttonID, db){
+          buttonID = "\"" + buttonID  + "\"";
+          document.getElementById(buttonID).classList.add('active');
+          for (var program in db) {
+            if (program != buttonID) {
+              document.getElementById(program).classList.remove('active');
+            }
+          }
+}
+function uploadRemoveColor(){
+          document.getElementById("file4").classList.remove('active');
+          document.getElementById("file2").classList.remove('active');
+          document.getElementById("file3").classList.remove('active');
+          document.getElementById("file1").classList.remove('active');
+}
+      </script>
+<!-- Auto Scrolling -->
+<!-- End of Scrolling JS -->
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <h1 class = "toptitle">External Code Runner</h1>
+      <hr class = "topline">
+      <div id="mySidenav" class="sidenav">
+        <a href="/home.html" id="home">Home</a>
+        <a href="#" id="about">About</a>
+        <a href="#" id="contact">Contact</a>
+      </div>
+
+      <div class = "buttons">
+        {% for program in db %}
+          <a href = "#" class = "button1" onclick = 'changeColor({{program}}, {{db.keys}})' id = {{program}} style = "margin:5%;"> {{program}} </a>
+        {% endfor %}
+        <br>
+        <a href = "#" class = "button1" onclick = "pageScroll()" id = "upload">RUN</a>
+      </div>
+    </body>
+</html>
