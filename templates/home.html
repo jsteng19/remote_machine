@@ -22,26 +22,22 @@ var height = Math.max( body.scrollHeight, body.offsetHeight,
   function pageScrollUp(){
     setTimeout(window.scrollBy(0,-1*height),100);
   }
-  function pageScroll() {
-    if(document.getElementById("file1").classList.contains('active')){
-      setTimeout(window.scrollBy(0,height),100);
-      uploadRemoveColor();
+  function pageScroll(jsondb) {
+    let buttonSelected = false;
+    for(var program in jsondb) {
+        if(document.getElementById(jsondb[program]["name"]).classList.contains('active')){
+          buttonSelected = true;
+          break;
+        }
     }
-    else if(document.getElementById("file2").classList.contains('active')){
-      setTimeout(window.scrollBy(0,height),100);
-      uploadRemoveColor();
-    }
-    else if(document.getElementById("file3").classList.contains('active')){
-      setTimeout(window.scrollBy(0,height),100);
-      uploadRemoveColor();
-    }
-    else if(document.getElementById("file4").classList.contains('active')){
-      setTimeout(window.scrollBy(0,height),100);
-      uploadRemoveColor();
-    }
-    else{
-      alert("No file selected to run.");
-    }
+        if (buttonSelected) {
+            setTimeout(window.scrollBy(0,height),100);
+            uploadRemoveColor(jsondb);
+        }
+        else{
+          alert("No file selected to run.");
+        }
+
 
   }
   function preventDefaultForScrollKeys(e) {
@@ -71,6 +67,7 @@ var height = Math.max( body.scrollHeight, body.offsetHeight,
       <li>Interactive console</li>
       <li> TYpED STUFF</li>
       <li>LiNe TwO</li>
+      <li id = "output"> >>> </li>
   </ul>
   <div class="cursor">
   >>> <input type="text" class="rq-form-element" style="background: black; color: white; font-family: monospace; padding: 1ex; caret-shape: underscore;"/>
@@ -86,44 +83,48 @@ var height = Math.max( body.scrollHeight, body.offsetHeight,
 <!-- Enable Scrolling On Button Click -->
 
   <script type = "text/javascript">
-    document.getElementById("upload").onclick = function() {
-  enableScroll();
-    document.getElementById("upload").onclick = function() {
-    enableScroll();
-    document.getElementById("status").innerHTML = "enabled";
-    document.getElementById("status").className = "enabled";
-};
 
-    function enableScroll() {
-      if (window.removeEventListener)
-      window.removeEventListener('DOMMouseScroll', preventDefault, false);
-      window.onmousewheel = document.onmousewheel = null;
-      window.onwheel = null;
-      window.ontouchmove = null;
-      document.onkeydown = null;
-}
-}
 
-function changeColor(buttonID, db){
-          buttonID = "\"" + buttonID  + "\"";
+function changeColor(buttonID, jsondb){
+
+
           document.getElementById(buttonID).classList.add('active');
-          for (var program in db) {
-            if (program != buttonID) {
-              document.getElementById(program).classList.remove('active');
+
+          for (var program in jsondb) {
+            if (jsondb[program]["name"] != buttonID) {
+              document.getElementById(jsondb[program]["name"]).classList.remove('active');
             }
           }
 }
-function uploadRemoveColor(){
-          document.getElementById("file4").classList.remove('active');
-          document.getElementById("file2").classList.remove('active');
-          document.getElementById("file3").classList.remove('active');
-          document.getElementById("file1").classList.remove('active');
-}
+
+    function runProgram(jsondb){
+          for (var program in jsondb) {
+
+            if (document.getElementById(jsondb[program]["name"]).classList.contains("active")) {
+              var xmlhttp = new XMLHttpRequest();
+              xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("output").innerHTML = this.responseText;
+                }
+              };
+              xmlhttp.open("POST", "run", true);
+              xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              xmlhttp.send("program=" + jsondb[program]["name"]);
+            }
+          }
+          pageScroll(jsondb);
+     }
+
+    function uploadRemoveColor(jsondb){
+          for (var program in jsondb) {
+            document.getElementById(jsondb[program]["name"]).classList.remove('active');
+          }
+    }
       </script>
 <!-- Auto Scrolling -->
 <!-- End of Scrolling JS -->
 
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
         <h1 class = "toptitle">External Code Runner</h1>
       <hr class = "topline">
       <div id="mySidenav" class="sidenav">
@@ -132,12 +133,13 @@ function uploadRemoveColor(){
         <a href="#" id="contact">Contact</a>
       </div>
 
-      <div class = "buttons">
+      <input class = "buttons">
         {% for program in db %}
-          <a href = "#" class = "button1" onclick = 'changeColor({{program}}, {{db.keys}})' id = {{program}} style = "margin:5%;"> {{program}} </a>
+          <a href = "#" class = "button1" onclick = 'changeColor({{program}}["name"], {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%;'> {{program["name"]}} </a>
         {% endfor %}
         <br>
-        <a href = "#" class = "button1" onclick = "pageScroll()" id = "upload">RUN</a>
+
+        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
       </div>
     </body>
 </html>
