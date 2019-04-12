@@ -13,12 +13,11 @@ def main():
 
 @app.route('/run', methods=['GET', 'POST'])
 def run():
-    # return str(request.form.get("programs"))
+    return str(runFile("Scripts", str(request.form.get("program")), [int(request.form.get("input"))])), 200
 
-    return str(runFile("Scripts", str(request.form.get("program")), [9])), 200
-   
     
 def runFile(location, name, args):
+    print(args);
     # for x in range len()
     file = importlib.import_module(location + "." + name)
     # print(file)
