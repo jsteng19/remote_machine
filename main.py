@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    db = json.loads(open("/Users/jstenger/Documents/workspace/remote_machine2/database/programs2.json").read())
+    db = json.loads(open("/Users/jstenger/Documents/workspace/remote_machine2/database/programs.json").read())
     print(db)
     return render_template('home.html', jsondb=json.dumps(db), db = db)
 
