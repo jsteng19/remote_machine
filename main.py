@@ -14,22 +14,6 @@ def run():
     return str(runFile("Scripts", str(request.form.get("program")), [int(request.form.get("input"))])), 200
 
     
-def runFile(location, name, args):
-     index = 'scriptIndex.json'
-  with open(index, 'r') as raw_file:
-    scriptStorage = json.loads(raw_file.read())
-  print(scriptStorage[name])
-  try:
-    location = scriptStorage[name]["path"]
-    print(location)
-  except KeyError:
-    return "Unexpected Error: The script is either missing or has an invalid location"
-  try:
-    file = importlib.import_module(location+"."+name) 
-    output = file.main(*args)
-  except Exception as excpt:
-    output = "\nUnexpected Error: "+str(excpt)
-  return output  
 
 
 def runFile(name,*args):
