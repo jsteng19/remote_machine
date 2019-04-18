@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request
-import json
-import importlib
-
+import json, importlib, unittest, os
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -17,6 +15,39 @@ def run():
 
     
 def runFile(location, name, args):
+     index = 'scriptIndex.json'
+  with open(index, 'r') as raw_file:
+    scriptStorage = json.loads(raw_file.read())
+  print(scriptStorage[name])
+  try:
+    location = scriptStorage[name]["path"]
+    print(location)
+  except KeyError:
+    return "Unexpected Error: The script is either missing or has an invalid location"
+  try:
+    file = importlib.import_module(location+"."+name) 
+    output = file.main(*args)
+  except Exception as excpt:
+    output = "\nUnexpected Error: "+str(excpt)
+  return output  
+
+
+def runFile(name,*args):
+    index = os.path.join(os.path.dirname(__file__),'database/programs.json')
+    with open(index, 'r') as raw_file:
+        scriptStorage = json.loads(raw_file.read())
+        #print(scriptStorage[name])
+    try:
+        location = scriptStorage[name]["path"]
+        #print(location)
+    except KeyError:
+        return "Unexpected Error: The script is either missing or has an invalid location"
+    try:
+        file = importlib.import_module(location+"."+name) 
+        output = file.main(*args)
+    except Exception as excpt:
+        output = "Unexpected Error: "+str(excpt)
+    return output  
     print(args);
     # for x in range len()
     file = importlib.import_module(location + "." + name)
@@ -24,5 +55,14 @@ def runFile(location, name, args):
     return file.main(*args)
 
 
+
+class testRunFile(unittest.TestCase):
+    def testFibCorrect(self):
+        self.assertEqual(runFile('Fibonacci',2),1)
+        self.assertEqual(runFile('Fibonacci',23),28657)
+    def testFibErrors(self):
+        self.assertEqual(runFile('Fibonacci',2,3),'Unexpected Error: main() takes 1 positional argument but 2 were given')
+        self.assertEqual(runFile('FakeProgram',2),'Unexpected Error: The script is either missing or has an invalid location')
 if __name__ == "__main__":
     app.run()
+
