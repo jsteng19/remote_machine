@@ -1,17 +1,14 @@
-[
-  {
+{
+  "Fibonacci": {
     "description": "returns the first 100 Fibonacci numbers",
-    "path": "Scripts",
-    "name": "Fibonacci"
+    "path": "Scripts"
   },
-  {
+  "Primes": {
     "description": "returns the first 100 prime numbers",
-    "path": "Scripts",
-    "name": "Primes"
+    "path": "Scripts"
   },
-  {
+  "Triangulars": {
     "description": "returns the first 10 triangular numbers",
-    "path": "Scripts",
-    "name": "Triangulars"
+    "path": "Scripts"
   }
-]
+}
