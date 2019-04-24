@@ -4,66 +4,10 @@
     <meta charset = "utf-8"/>
   </head>
     <body>
-<!-- Start of Scrolling JS -->
-    <script>
-  var keys = {37: 1, 38: 1, 39: 1, 40: 1};
-  disableScroll();
-  var body = document.body,
-    html = document.documentElement;
-
-var height = Math.max( body.scrollHeight, body.offsetHeight,
-                       html.clientHeight, html.scrollHeight, html.offsetHeight );
-  function preventDefault(e) {
-  e = e || window.event;
-  if (e.preventDefault)
-      e.preventDefault();
-      e.returnValue = false;
-  }
-  function pageScrollUp(){
-    setTimeout(window.scrollBy(0,-1*height),100);
-  }
-  function pageScroll(jsondb) {
-    let buttonSelected = false;
-    for(var program in jsondb) {
-        if(document.getElementById(jsondb[program]["name"]).classList.contains('active')){
-          buttonSelected = true;
-          break;
-        }
-    }
-        if (buttonSelected) {
-            setTimeout(window.scrollBy(0,height),100);
-            uploadRemoveColor(jsondb);
-        }
-        else{
-          alert("No file selected to run.");
-        }
-
-
-  }
-  function preventDefaultForScrollKeys(e) {
-    if (keys[e.keyCode]) {
-        preventDefault(e);
-        return false;
-    }
-  }
-
-  function disableScroll() {
-    if (window.addEventListener) // older FF
-      window.addEventListener('DOMMouseScroll', preventDefault, false);
-      window.onwheel = preventDefault; // modern standard
-      window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-      window.ontouchmove  = preventDefault; // mobile
-      document.onkeydown  = preventDefaultForScrollKeys;
-  }
-  </script>
-
-<!-- Eanble Scrolling Button -->
 
 <!-- Console Div -->
 
-<div class = "absolute">
-    <a href = "#" class = "button2" onclick = "pageScrollUp();" id = "Back">exit</a>
-  <ul class="console">
+ <ul class="console">
       <li>Interactive console</li>
       <li> TYpED STUFF</li>
       <li>LiNe TwO</li>
@@ -117,8 +61,6 @@ function changeColor(buttonID, jsondb){
           }
     }
       </script>
-<!-- Auto Scrolling -->
-<!-- End of Scrolling JS -->
 
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
         <h1 class = "toptitle">External Code Runner</h1>
