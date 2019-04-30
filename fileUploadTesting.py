@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 # I think this is for uploading python files
-UPLOAD_FOLDER = '\\Users\\Bryce\\Workspcae\\Flask Things\\pyScripts'
+UPLOAD_FOLDER = 'C:/Users/Bryce/Workspace/Flask Things/pyScripts'
 ALLOWED_EXTENSIONS = set(['py','jpg','png'])
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload1', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
@@ -27,7 +27,7 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             file.save(os.path.join(app.instance_path,app.config['UPLOAD_FOLDER'],secure_filename(file.filename)))
-            return redirect(url_for('uploaded_file',filename=filename))
+            return redirect(url_for('uploaded_file',filename=file.filename))
     return '''
     <!doctype html>
     <title>Upload new File</title>
