@@ -17,7 +17,7 @@ def run():
 
 
 def runFile(name,*args):
-    index = os.path.join(os.path.dirname(__file__),'database/programs.json')
+    index = os.path.join(os.path.dirname(__file__),'database/file_paths.json')
     with open(index, 'r') as raw_file:
         scriptStorage = json.loads(raw_file.read())
         #print(scriptStorage[name])
