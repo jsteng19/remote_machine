@@ -6,8 +6,9 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = 'path/to/Scripts'
+UPLOAD_FOLDER = os.path.join(app.root_path,'Scripts')
 ALLOWED_EXTENSIONS = set(['py'])
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -44,7 +45,7 @@ def uploaded_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    db = json.loads(open("/path/to/database/programs.json").read())
+    db = json.loads(open(os.path.join("database/programs.json")).read())
     print(db)
     return render_template('home.html', jsondb=json.dumps(db), db = db)
 
