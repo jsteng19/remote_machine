@@ -1,169 +1,18 @@
+<!DOCTYPE HTML>
 <html lang = "en">
   <head>
     <meta charset = "utf-8"/>
   </head>
     <body>
-      <script>
-    var keys = {37: 1, 38: 1, 39: 1, 40: 1};
-     disableScroll();
-    var body = document.body,
-      html = document.documentElement;
 
-  var height = Math.max( body.scrollHeight, body.offsetHeight,
-                         html.clientHeight, html.scrollHeight, html.offsetHeight );
-    function preventDefault(e) {
-    e = e || window.event;
-    if (e.preventDefault)
-        e.preventDefault();
-        e.returnValue = false;
-    }
-    function pageScrollUp(){
-      setTimeout(window.scrollBy(0,-1*height),100);
-    }
-    function pageScroll() {
-      if(document.getElementById("file1").classList.contains('active')){
-        setTimeout(window.scrollBy(0,height),100);
-        uploadRemoveColor();
-      }
-      else if(document.getElementById("file2").classList.contains('active')){
-        setTimeout(window.scrollBy(0,height),100);
-        uploadRemoveColor();
-      }
-      else if(document.getElementById("file3").classList.contains('active')){
-        setTimeout(window.scrollBy(0,height),100);
-        uploadRemoveColor();
-      }
-      else if(document.getElementById("file4").classList.contains('active')){
-        setTimeout(window.scrollBy(0,height),100);
-        uploadRemoveColor();
-      }
-      else{
-        alert("No file selected to run.");
-      }
-
-    }
-    function preventDefaultForScrollKeys(e) {
-      if (keys[e.keyCode]) {
-          preventDefault(e);
-          return false;
-      }
-    }
-
-    function disableScroll() {
-      if (window.addEventListener) // older FF
-        window.addEventListener('DOMMouseScroll', preventDefault, false);
-        window.onwheel = preventDefault; // modern standard
-        window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-        window.ontouchmove  = preventDefault; // mobile
-        document.onkeydown  = preventDefaultForScrollKeys;
-    }
-      var x = 1;
-      var y = 0;
-      function moveBar(){
-
-   var KeyID = event.keyCode;
-   if (KeyID == 8){
-     if (y%2 == 0){
-       y=y+1;
-       x=x-9
-       document.getElementById("block").style.left = x;
-     }
-     else{
-     x=x-8;
-     y=y+1;
-     document.getElementById("block").style.left = x;
-   }
- }
-   else{
-     if(y>30){
-
-     }
-     if (y%2 == 0){
-       x=x+9
-       y=y+1;
-       document.getElementById("block").style.left = x;
-     }
-     else{
-       x=x+8;
-       y=y+1;
-       document.getElementById("block").style.left = x;
-     }
-   }
-
-
-      }
-
-      function file1Color(){
-        document.getElementById("file1").classList.add('active');
-        document.getElementById("file2").classList.remove('active');
-        document.getElementById("file3").classList.remove('active');
-        document.getElementById("file4").classList.remove('active');
-      }
-      function file2Color(){
-        document.getElementById("file2").classList.add('active');
-        document.getElementById("file1").classList.remove('active');
-        document.getElementById("file3").classList.remove('active');
-        document.getElementById("file4").classList.remove('active');
-      }
-      function file3Color(){
-        document.getElementById("file3").classList.add('active');
-        document.getElementById("file2").classList.remove('active');
-        document.getElementById("file1").classList.remove('active');
-        document.getElementById("file4").classList.remove('active');
-      }
-
-
-      </script>
-    <link rel = "stylesheet" href = "testingStyles.css">
-    <div class = "absolute">
-        <a href = "#" class = "button2" onclick = "pageScrollUp();" id = "Back">exit</a>
-      <ul class="console">
-          <li>Interactive console</li>
-          <li> TYpED STUFF</li>
-          <li>LiNe TwO</li>
-      </ul>
-    <div class= "cursor">
-    <input id = "input" onkeydown="moveBar()" type="text" class="fb-Search_Input" value = ""/>
-    <i id = "block"></i>
-    </div>
-  </div>
-  <h1 class = "toptitle">External Code Runner</h1>
-  <hr class = "topline">
-  <div id="mySidenav" class="sidenav">
-    <a href="/home.html" id="home">Home</a>
-    <a href="#" id="about">About</a>
-    <a href="#" id="contact">Contact</a>
-  </div>
-  <div class = "buttons">
-    <a href = "#" class = "button1" onclick = "file1Color()" id = "file1" style = "margin:5%;"> file_1.py </a>
-    <a href = "#" class = "button1" onclick = "file2Color()" id = "file2" style = "margin:5%;"> file_2.py </a>
-    <a href = "#" class = "button1" onclick = "file3Color()" id = "file3" style = "margin:5%;"> file_3.py </a>
-    <a href = "#" class = "button1" onclick = "file4Color()" id = "file4" style = "margin:5%;"> file_4.py </a>
-    <br>
-    <a href = "#" class = "button1" onclick = "pageScroll();" id = "upload">RUN</a>
-  </div>
-</body>
 <!-- Console Div -->
-
- <ul class="console">
-      <li>Interactive console</li>
-      <li> TYpED STUFF</li>
-      <li>LiNe TwO</li>
-      <li id = "output"> >>> </li>
-  </ul>
-  <div class="cursor">
-  >>> <input type="text" class="rq-form-element" style="background: black; color: white; font-family: monospace; padding: 1ex; caret-shape: underscore;"/>
-  <i></i>
-  </div>
-
-</div>
 
 <!-- Arrow Div -->
 
 
 
 <!-- Enable Scrolling On Button Click -->
-
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
   <script type = "text/javascript">
 
 function changeColor(buttonID, jsondb){
@@ -198,21 +47,76 @@ function changeColor(buttonID, jsondb){
             document.getElementById(jsondb[program]["name"]).classList.remove('active');
           }
     }
+
+    $(document).ready(function(){
+
+    $('inputLog').bind('scroll',chk_scroll);
+});
+
+
+function chk_scroll(e)
+{
+    var elem = $(e.currentTarget);
+    if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
+    {
+        console.log("bottom");
+    }
+
+}
       </script>
+
 
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
         <h1 class = "toptitle">External Code Runner</h1>
       <hr class = "topline">
 
-
+        <div id ="buttdiv">
         {% for program in db %}
-          <a href = "#" class = "button1" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%;'> {{program["name"]}} </a>
+          <a href = "#" class = "button1" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
         {% endfor %}
-        <br>
-        <input class = "text", id = "input">
-        <br>
-        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
+      </div>
+        <div id ="inputLog">
+          <ul class = "a">
+               <li>Cmd 1</li>
+               <li> Cmd 2</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+           </ul>
 
+        </div>
+        <div id ="inputDiv">
+        <input type = "text", id = "input">
+        <i></i>
+      </div>
+        <br>
+        <div id = "outer">
+        <div id = "rundiv">
+        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
+      </div>
+    </div>
+        <ul class="console">
+             <li>Interactive console</li>
+             <li> TYpED STUFF</li>
+             <li>LiNe TwO</li>
+             <li id = "output"> >>> </li>
+         </ul>
+
+      </div>
+      <div id = "test">
+        <p>This is a paragraph</p>
       </div>
     </body>
 </html>
