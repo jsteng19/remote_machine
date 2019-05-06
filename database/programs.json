@@ -1,8 +1,5 @@
-{
-    "Fibonacci": 
-      {"description": "returns the first 100 Fibonacci numbers", "path": "path"},
-    "Primes":
-      {"description": "returns the first 100 prime numbers", "path": "path"},
-    "Triangulars":
-      {"description": "returns the first 10 triangular numbers", "path": "path"}
-}
+[
+      {"description": "returns the nth Fibonacci number", "name": "Fibonacci"},
+      {"description": "returns the nth prime number", "name": "Primes"},
+      {"description": "returns the nth triangular number","name": "Triangulars"}
+]

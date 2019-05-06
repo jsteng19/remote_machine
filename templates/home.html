@@ -143,4 +143,76 @@
     <a href = "#" class = "button1" onclick = "pageScroll();" id = "upload">RUN</a>
   </div>
 </body>
+<!-- Console Div -->
+
+ <ul class="console">
+      <li>Interactive console</li>
+      <li> TYpED STUFF</li>
+      <li>LiNe TwO</li>
+      <li id = "output"> >>> </li>
+  </ul>
+  <div class="cursor">
+  >>> <input type="text" class="rq-form-element" style="background: black; color: white; font-family: monospace; padding: 1ex; caret-shape: underscore;"/>
+  <i></i>
+  </div>
+
+</div>
+
+<!-- Arrow Div -->
+
+
+
+<!-- Enable Scrolling On Button Click -->
+
+  <script type = "text/javascript">
+
+function changeColor(buttonID, jsondb){
+          document.getElementById(buttonID).classList.add('active');
+          for (var program in jsondb) {
+            if (jsondb[program]["name"] != buttonID) {
+              document.getElementById(jsondb[program]["name"]).classList.remove('active');
+            }
+          }
+}
+
+    function runProgram(jsondb){
+          for (var program in jsondb) {
+
+            if (document.getElementById(jsondb[program]["name"]).classList.contains("active")) {
+              var xmlhttp = new XMLHttpRequest();
+              xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("upload").innerHTML = this.responseText;
+                }
+              };
+              xmlhttp.open("POST", "run", true);
+              xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              var data = new FormData();
+              xmlhttp.send("program=" + jsondb[program]["name"] + "&" + "input=" + document.getElementById("input").value);
+            }
+          }
+     }
+
+    function uploadRemoveColor(jsondb){
+          for (var program in jsondb) {
+            document.getElementById(jsondb[program]["name"]).classList.remove('active');
+          }
+    }
+      </script>
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
+        <h1 class = "toptitle">External Code Runner</h1>
+      <hr class = "topline">
+
+
+        {% for program in db %}
+          <a href = "#" class = "button1" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%;'> {{program["name"]}} </a>
+        {% endfor %}
+        <br>
+        <input class = "text", id = "input">
+        <br>
+        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
+
+      </div>
+    </body>
 </html>
