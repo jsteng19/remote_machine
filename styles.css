@@ -3,7 +3,6 @@
 /* NOTE: #ffd152 is the yellow side bar color */
 
 /* SIDE TAB NAVIGATION */
-
 #mySidenav a {
   position: absolute;
   left: -80px;
@@ -16,11 +15,17 @@
   border-radius: 0 5px 5px 0;
   font-family: 'Roboto',sans-serif;
 }
-
+#test{
+width:50%;
+left:50%;
+padding: 0;
+margin: 0;
+}
 #mySidenav a:hover {
   left: 0;
   color: #343233;
 }
+
 
 #home {
   top: 10.6%;
@@ -36,20 +41,16 @@
   top: 27.4%;
   background-color: #ffd152
 }
-
 /* END SIDE TAB NAVIGATION */
 
 body{
   background-color: #343233;
 }
-
 html{
   scroll-behavior: smooth;
   overflow-y:hidden;
 }
-
 /* VERTICAL LINE ON TOP */
-
 .topline{
     display: block;
     height: 12px;
@@ -59,37 +60,26 @@ html{
     padding: 0;
     border-color: #FFFFFF;
 }
-
 /* END VERTICAL LINE ON TOP */
 
 /* TITLE OF WEBSITE */
-
 .toptitle{
   font-weight: 300;
   text-align:center;
   color: #efdab9;
   font-family:'Roboto', sans-serif;
 }
-
 /* BUTTONS DIV */
-
-.buttons{
-  text-align:center;
-}
-
 /* END BUTTONS DIV */
 
 /* JS ACTIVE CLASS */
-
 .active{
   color:#000000;
   background-color:#FFFFFF;
 }
-
 /* END JS ACTIVE CLASS */
 
 /* MAIN BUTTONS IN .BUTTONS DIV*/
-
 a.button1{
   display:inline-block;
   padding: 0.35em 1.2em;
@@ -103,24 +93,21 @@ a.button1{
   color:#efdab9;
   text-align:center;
   transition: all 0.2em;
+  justify-content: center;
 }
-
 a.button1:hover{
   color:#000000;
   background-color:#FFFFFF;
 }
-
 @media all and (max-width:30em){
   a.button1{
     display:inline-block;
     margin: 0.4em auto;
   }
 }
-
 /* END MAIN BUTTONS */
 
 /* START OF CONSOLE DIV */
-
 div.absolute {
   color:white;
   position: absolute;
@@ -136,63 +123,99 @@ div.absolute {
   border-color: #22252B;
   box-shadow: 0px 8px 16px 0px #1E2025;
 }
-
 ul.console{
   list-style-type:none;
   color:white;
   font-family: 'Roboto',"Lucida Console", "Times New Roman", sans-serif;
 /* END OF CONSOLE DIV */
 }
-
 /* START OF UP ARROW DIV */
-
 .button2{
   background-color: #22252B;
   color: #EEF1F6;
 }
-
 /* START OF INPUT TAG CSS*/
-
-.cursor {
-	width: 100%;
-	position: absolute;
-	top: 50%;
-	left: 10%
-  background-color: #22252B;
-  color: #22252B;
-  font-family: monospace;
-  border: none;
-  padding: 0ex;
+input[type="text"] {
+    color:whitesmoke;
+    background-color:#22252B;
+    border-style:none;
+    padding: 0px;
+    left: 8%;
+    width: 95%;
+    margin-left: 1.5%;
+    font-size: 14px;
 }
 
-#block {
+/* START OF CURSOR CSS*/
+#inputDiv	i {
 	position: absolute;
 	width: 6px;
 	height: 80%;
-	background-color: gray;
-	left: .6%;
+	background-color:whitesmoke ;
+	left: 1.5%;
 	top: 10%;
 	animation-name: blink;
 	animation-duration: 800ms;
 	animation-iteration-count: infinite;
-	opacity: 10;
+	opacity: 2;
 }
 
-input[type="text"] {
-    left: 8%;
-    width: 95%;
-		font-family: monospace;
-		font-size: 14px;
-		caret-color: #22252B;
-    background-color: #22252B;
-    color: white;
-    border: none;
-    input:focus {
-    outline: none;
-}
+#inputDiv input:focus + i {
+	display: none;
 }
 
 @keyframes blink {
-	from { opacity: 10; }
+	from { opacity: 2; }
 	to { opacity: 0; }
+}
+#rundiv{
+  text-align:center
+}
+#buttdiv{
+  text-align:center;
+}
+#inputDiv{
+position:relative;
+background-color:#22252B;
+height:10%;
+border-style: inset;
+border-top: none;
+}
+#input:focus{
+  outline-width: 0;
+}
+#inputLog{
+  position:relative;
+  background-color:#22252B;
+  border-style: inset;
+  border-bottom: none;
+  height:10vh;
+  overflow-y: auto;
+  padding-bottom: 3vh;
+  /*
+  background-color:#343233;
+
+  border-color:#EEF1F6;
+  color:#efdab9;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid #FFFFFF;
+  margin-right: 0 0.3em 0.3em 0;
+  margin-top: 0 0.3em 0.3em 0;
+  margin-bottom: 0 0.3em 0.3em 0;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family: 'Roboto', sans-serif;
+  font-weight:300;
+  */
+}
+ul.a {
+  list-style-type: none;
+  margin:0;
+  padding:0;
+}
+li::before {
+margin:none;
+padding:none;
+content: ">>> ";
 }

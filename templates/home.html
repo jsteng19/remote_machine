@@ -1,10 +1,148 @@
-<!DOCTYPE HTML>
 <html lang = "en">
   <head>
     <meta charset = "utf-8"/>
   </head>
     <body>
+      <script>
+    var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+     disableScroll();
+    var body = document.body,
+      html = document.documentElement;
 
+  var height = Math.max( body.scrollHeight, body.offsetHeight,
+                         html.clientHeight, html.scrollHeight, html.offsetHeight );
+    function preventDefault(e) {
+    e = e || window.event;
+    if (e.preventDefault)
+        e.preventDefault();
+        e.returnValue = false;
+    }
+    function pageScrollUp(){
+      setTimeout(window.scrollBy(0,-1*height),100);
+    }
+    function pageScroll() {
+      if(document.getElementById("file1").classList.contains('active')){
+        setTimeout(window.scrollBy(0,height),100);
+        uploadRemoveColor();
+      }
+      else if(document.getElementById("file2").classList.contains('active')){
+        setTimeout(window.scrollBy(0,height),100);
+        uploadRemoveColor();
+      }
+      else if(document.getElementById("file3").classList.contains('active')){
+        setTimeout(window.scrollBy(0,height),100);
+        uploadRemoveColor();
+      }
+      else if(document.getElementById("file4").classList.contains('active')){
+        setTimeout(window.scrollBy(0,height),100);
+        uploadRemoveColor();
+      }
+      else{
+        alert("No file selected to run.");
+      }
+
+    }
+    function preventDefaultForScrollKeys(e) {
+      if (keys[e.keyCode]) {
+          preventDefault(e);
+          return false;
+      }
+    }
+
+    function disableScroll() {
+      if (window.addEventListener) // older FF
+        window.addEventListener('DOMMouseScroll', preventDefault, false);
+        window.onwheel = preventDefault; // modern standard
+        window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+        window.ontouchmove  = preventDefault; // mobile
+        document.onkeydown  = preventDefaultForScrollKeys;
+    }
+      var x = 1;
+      var y = 0;
+      function moveBar(){
+
+   var KeyID = event.keyCode;
+   if (KeyID == 8){
+     if (y%2 == 0){
+       y=y+1;
+       x=x-9
+       document.getElementById("block").style.left = x;
+     }
+     else{
+     x=x-8;
+     y=y+1;
+     document.getElementById("block").style.left = x;
+   }
+ }
+   else{
+     if(y>30){
+
+     }
+     if (y%2 == 0){
+       x=x+9
+       y=y+1;
+       document.getElementById("block").style.left = x;
+     }
+     else{
+       x=x+8;
+       y=y+1;
+       document.getElementById("block").style.left = x;
+     }
+   }
+
+
+      }
+
+      function file1Color(){
+        document.getElementById("file1").classList.add('active');
+        document.getElementById("file2").classList.remove('active');
+        document.getElementById("file3").classList.remove('active');
+        document.getElementById("file4").classList.remove('active');
+      }
+      function file2Color(){
+        document.getElementById("file2").classList.add('active');
+        document.getElementById("file1").classList.remove('active');
+        document.getElementById("file3").classList.remove('active');
+        document.getElementById("file4").classList.remove('active');
+      }
+      function file3Color(){
+        document.getElementById("file3").classList.add('active');
+        document.getElementById("file2").classList.remove('active');
+        document.getElementById("file1").classList.remove('active');
+        document.getElementById("file4").classList.remove('active');
+      }
+
+
+      </script>
+    <link rel = "stylesheet" href = "testingStyles.css">
+    <div class = "absolute">
+        <a href = "#" class = "button2" onclick = "pageScrollUp();" id = "Back">exit</a>
+      <ul class="console">
+          <li>Interactive console</li>
+          <li> TYpED STUFF</li>
+          <li>LiNe TwO</li>
+      </ul>
+    <div class= "cursor">
+    <input id = "input" onkeydown="moveBar()" type="text" class="fb-Search_Input" value = ""/>
+    <i id = "block"></i>
+    </div>
+  </div>
+  <h1 class = "toptitle">External Code Runner</h1>
+  <hr class = "topline">
+  <div id="mySidenav" class="sidenav">
+    <a href="/home.html" id="home">Home</a>
+    <a href="#" id="about">About</a>
+    <a href="#" id="contact">Contact</a>
+  </div>
+  <div class = "buttons">
+    <a href = "#" class = "button1" onclick = "file1Color()" id = "file1" style = "margin:5%;"> file_1.py </a>
+    <a href = "#" class = "button1" onclick = "file2Color()" id = "file2" style = "margin:5%;"> file_2.py </a>
+    <a href = "#" class = "button1" onclick = "file3Color()" id = "file3" style = "margin:5%;"> file_3.py </a>
+    <a href = "#" class = "button1" onclick = "file4Color()" id = "file4" style = "margin:5%;"> file_4.py </a>
+    <br>
+    <a href = "#" class = "button1" onclick = "pageScroll();" id = "upload">RUN</a>
+  </div>
+</body>
 <!-- Console Div -->
 
  <ul class="console">
