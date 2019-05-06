@@ -48,20 +48,17 @@ function changeColor(buttonID, jsondb){
           }
     }
 
-    $(document).ready(function(){
-
-    $('inputLog').bind('scroll',chk_scroll);
+$('inputDiv').scroll(function(){
+  if(isScrollBottom()){
+    document.getElementById("inputDiv").style.opacity = 1;
+    console.log("Its at bottom");
+  }
 });
 
-
-function chk_scroll(e)
-{
-    var elem = $(e.currentTarget);
-    if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
-    {
-        console.log("bottom");
-    }
-
+function isScrollBottom() {
+  var elementHeight = $('inputDiv').height();
+  var scrollPosition = $('inputDiv').height() + $(div).scrollTop();
+  return (elementHeight == scrollPosition);
 }
       </script>
 
