@@ -52,15 +52,25 @@ def main():
 
 @app.route('/run', methods=['GET', 'POST'])
 def run():
-    return str(runFile("Scripts", str(request.form.get("program")), [int(request.form.get("input"))])), 200
+    return str(runFile(str(request.form.get("program")), [int(request.form.get("input"))])), 200
 
     
-def runFile(location, name, args):
-    print(args);
-    # for x in range len()
-    file = importlib.import_module(location + "." + name)
-    # print(file)
-    return file.main(*args)
+def runFile(name,args):
+    index = os.path.join(app.root_path,'database\\file_paths.json')
+    with open(index, 'r') as raw_file:
+        scriptStorage = json.loads(raw_file.read())
+        print(scriptStorage[name])
+    try:
+        location = scriptStorage[name]["path"]
+        print(location)
+    except KeyError:
+        return "Unexpected Error: The script is either missing or has an invalid location"
+    try:
+        file = importlib.import_module(location+"."+name) 
+        output = file.main(*args)
+    except Exception as excpt:
+        output = "Unexpected Error: "+str(excpt)
+    return output 
 
 
 if __name__ == "__main__":
