@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+  <head>
+    <meta charset = "utf-8"/>
+  </head>
+    <body>
+
+<!-- Console Div -->
+
+<!-- Arrow Div -->
+
+
+
+<!-- Enable Scrolling On Button Click -->
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type = "text/javascript">
+
+function changeColor(buttonID, jsondb){
+          document.getElementById(buttonID).classList.add('active');
+          for (var program in jsondb) {
+            if (jsondb[program]["name"] != buttonID) {
+              document.getElementById(jsondb[program]["name"]).classList.remove('active');
+            }
+          }
+}
+
+    function runProgram(jsondb){
+          for (var program in jsondb) {
+
+            if (document.getElementById(jsondb[program]["name"]).classList.contains("active")) {
+              var xmlhttp = new XMLHttpRequest();
+              xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("upload").innerHTML = this.responseText;
+                }
+              };
+              xmlhttp.open("POST", "run", true);
+              xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              var data = new FormData();
+              xmlhttp.send("program=" + jsondb[program]["name"] + "&" + "input=" + document.getElementById("input").value);
+            }
+          }
+     }
+
+    function uploadRemoveColor(jsondb){
+          for (var program in jsondb) {
+            document.getElementById(jsondb[program]["name"]).classList.remove('active');
+          }
+    }
+
+    $(document).ready(function(){
+
+    $('inputLog').bind('scroll',chk_scroll);
+});
+
+
+function chk_scroll(e)
+{
+    var elem = $(e.currentTarget);
+    if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight())
+    {
+        console.log("bottom");
+    }
+
+}
+      </script>
+
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
+        <h1 class = "toptitle">External Code Runner</h1>
+      <hr class = "topline">
+
+        <div id ="buttdiv">
+        {% for program in db %}
+          <a href = "#" class = "button1" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
+        {% endfor %}
+      </div>
+        <div id ="inputLog">
+          <ul class = "a">
+               <li>Cmd 1</li>
+               <li> Cmd 2</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+               <li>Cmd 3</li>
+           </ul>
+
+        </div>
+        <div id ="inputDiv">
+        <input type = "text", id = "input">
+        <i></i>
+      </div>
+        <br>
+        <div id = "outer">
+        <div id = "rundiv">
+        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
+      </div>
+    </div>
+        <ul class="console">
+             <li>Interactive console</li>
+             <li> TYpED STUFF</li>
+             <li>LiNe TwO</li>
+             <li id = "output"> >>> </li>
+         </ul>
+
+      </div>
+      <div id = "test">
+        <p>This is a paragraph</p>
+      </div>
+    </body>
+</html>
