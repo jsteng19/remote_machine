@@ -3,6 +3,7 @@
 /* NOTE: #ffd152 is the yellow side bar color */
 
 /* SIDE TAB NAVIGATION */
+
 #mySidenav a {
   position: absolute;
   left: -80px;
@@ -21,7 +22,6 @@
   color: #343233;
 }
 
-
 #home {
   top: 10.6%;
   background-color: #ffd152;
@@ -36,16 +36,20 @@
   top: 27.4%;
   background-color: #ffd152
 }
+
 /* END SIDE TAB NAVIGATION */
 
 body{
   background-color: #343233;
 }
+
 html{
   scroll-behavior: smooth;
   overflow-y:hidden;
 }
+
 /* VERTICAL LINE ON TOP */
+
 .topline{
     display: block;
     height: 12px;
@@ -55,29 +59,37 @@ html{
     padding: 0;
     border-color: #FFFFFF;
 }
+
 /* END VERTICAL LINE ON TOP */
 
 /* TITLE OF WEBSITE */
+
 .toptitle{
   font-weight: 300;
   text-align:center;
   color: #efdab9;
   font-family:'Roboto', sans-serif;
 }
+
 /* BUTTONS DIV */
+
 .buttons{
   text-align:center;
 }
+
 /* END BUTTONS DIV */
 
 /* JS ACTIVE CLASS */
+
 .active{
   color:#000000;
   background-color:#FFFFFF;
 }
+
 /* END JS ACTIVE CLASS */
 
 /* MAIN BUTTONS IN .BUTTONS DIV*/
+
 a.button1{
   display:inline-block;
   padding: 0.35em 1.2em;
@@ -92,19 +104,23 @@ a.button1{
   text-align:center;
   transition: all 0.2em;
 }
+
 a.button1:hover{
   color:#000000;
   background-color:#FFFFFF;
 }
+
 @media all and (max-width:30em){
   a.button1{
     display:inline-block;
     margin: 0.4em auto;
   }
 }
+
 /* END MAIN BUTTONS */
 
 /* START OF CONSOLE DIV */
+
 div.absolute {
   color:white;
   position: absolute;
@@ -120,49 +136,63 @@ div.absolute {
   border-color: #22252B;
   box-shadow: 0px 8px 16px 0px #1E2025;
 }
+
 ul.console{
   list-style-type:none;
   color:white;
   font-family: 'Roboto',"Lucida Console", "Times New Roman", sans-serif;
 /* END OF CONSOLE DIV */
 }
+
 /* START OF UP ARROW DIV */
+
 .button2{
   background-color: #22252B;
   color: #EEF1F6;
 }
+
 /* START OF INPUT TAG CSS*/
-input[type="text"] {
-    color:white;
-    background-color:#22252B;
-    border-style:none;
-    padding: 0px;
-    left: 8%;
-    width: 95%;
+
+.cursor {
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 10%
+  background-color: #22252B;
+  color: #22252B;
+  font-family: monospace;
+  border: none;
+  padding: 0ex;
 }
 
-/* START OF CURSOR CSS*/
-.cursor {
-	position: relative;
-}
-.cursor	i {
+#block {
 	position: absolute;
 	width: 6px;
 	height: 80%;
 	background-color: gray;
-	left: 2.9%;
+	left: .6%;
 	top: 10%;
 	animation-name: blink;
 	animation-duration: 800ms;
 	animation-iteration-count: infinite;
-	opacity: 2;
+	opacity: 10;
 }
 
-.cursor input:focus + i {
-	display: none;
+input[type="text"] {
+    left: 8%;
+    width: 95%;
+		font-family: monospace;
+		font-size: 14px;
+		caret-color: #22252B;
+    background-color: #22252B;
+    color: white;
+    border: none;
+    input:focus {
+    outline: none;
+}
 }
 
 @keyframes blink {
-	from { opacity: 2; }
+	from { opacity: 10; }
 	to { opacity: 0; }
 }
