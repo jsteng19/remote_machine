@@ -54,7 +54,7 @@ def uploaded_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    db = json.loads(open(os.path.join("database/programs.json")).read()
+    db = json.loads(open(os.path.join("database/programs.json")).read())
     return render_template('home.html', jsondb=json.dumps(db), db=db)
 
 
