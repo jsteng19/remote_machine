@@ -9,7 +9,6 @@ app = Flask(__name__)
 UPLOAD_FOLDER = os.path.join(app.root_path,'Scripts')
 ALLOWED_EXTENSIONS = set(['py'])
 
-
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -33,7 +32,16 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
+            dbfile = open(os.path.join("database/programs.json"), 'r+')
             file.save(os.path.join(app.instance_path, app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+            description = ""
+            if request.form['description'] is not None:
+                description = request.form['description']
+            db = json.loads(dbfile.read())
+            db.append({'description': description, 'name': file.filename.split('.')[0]})
+            dbfile.seek(0)
+            json.dump(db, dbfile)
+            dbfile.truncate()
 
             # return redirect(url_for('uploaded_file', filename=file.filename))
     return render_template('upload.html')
@@ -45,9 +53,8 @@ def uploaded_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    db = json.loads(open(os.path.join("database/programs.json")).read())
-    print(db)
-    return render_template('home.html', jsondb=json.dumps(db), db = db)
+    db = json.loads(open(os.path.join("database/programs.json")).read()
+    return render_template('home.html', jsondb=json.dumps(db), db=db)
 
 
 @app.route('/run', methods=['GET', 'POST'])
