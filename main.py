@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = os.path.join(app.root_path,'Scripts')
+UPLOAD_FOLDER = '/Users/jstenger/Documents/workspace/remote_machine/Scripts'
 ALLOWED_EXTENSIONS = set(['py'])
 
 app = Flask(__name__)
@@ -51,6 +51,7 @@ def upload_file():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+
 @app.route('/', methods=['GET', 'POST'])
 def main():
     db = json.loads(open(os.path.join("database/programs.json")).read()
@@ -59,25 +60,15 @@ def main():
 
 @app.route('/run', methods=['GET', 'POST'])
 def run():
-    return str(runFile(str(request.form.get("program")), [int(request.form.get("input"))])), 200
+    return str(runFile("Scripts", str(request.form.get("program")), [int(request.form.get("input"))])), 200
 
-    
-def runFile(name,args):
-    index = os.path.join(app.root_path,'database\\file_paths.json')
-    with open(index, 'r') as raw_file:
-        scriptStorage = json.loads(raw_file.read())
-        print(scriptStorage[name])
-    try:
-        #location = scriptStorage[name]["path"]
-        location = 'scripts'
-    except KeyError:
-        return "Unexpected Error: The script is either missing or has an invalid location"
-    try:
-        file = importlib.import_module(location+"."+name) 
-        output = file.main(*args)
-    except Exception as excpt:
-        output = "Unexpected Error: "+str(excpt)
-    return output 
+
+def runFile(location, name, args):
+    print(args)
+    # for x in range len()
+    file = importlib.import_module(location + "." + name)
+    # print(file)
+    return file.main(*args)
 
 
 if __name__ == "__main__":
