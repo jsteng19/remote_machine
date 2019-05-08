@@ -59,18 +59,17 @@ def main():
 
 @app.route('/run', methods=['GET', 'POST'])
 def run():
-    return str(runFile("Scripts", str(request.form.get("program")), [int(request.form.get("input"))])), 200
+    return str(runFile(str(request.form.get("program")), [int(request.form.get("input"))])), 200
 
     
 def runFile(name,args):
-    index = os.path.join(os.path.dirname(__file__),'database/file_paths.json')
-#get relative path for this
+    index = os.path.join(app.root_path,'database\\file_paths.json')
     with open(index, 'r') as raw_file:
         scriptStorage = json.loads(raw_file.read())
         print(scriptStorage[name])
     try:
-        location = scriptStorage[name]["path"]
-        print(location)
+        #location = scriptStorage[name]["path"]
+        location = 'scripts'
     except KeyError:
         return "Unexpected Error: The script is either missing or has an invalid location"
     try:
