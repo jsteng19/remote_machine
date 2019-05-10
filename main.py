@@ -3,7 +3,7 @@ import json
 import importlib
 import os
 from werkzeug.utils import secure_filename
-
+#not all of these imports are 
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.join(app.root_path,'Scripts')
@@ -45,6 +45,7 @@ def uploaded_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
+    #loading webserver, uses programs to display available programs
     db = json.loads(open(os.path.join("database/programs.json")).read())
     print(db)
     return render_template('home.html', jsondb=json.dumps(db), db = db)
@@ -52,10 +53,12 @@ def main():
 
 @app.route('/run', methods=['GET', 'POST'])
 def run():
+    #runs the file as demanded by the webpage and returns the output
     return str(runFile(str(request.form.get("program")), [int(request.form.get("input"))])), 200
 
     
 def runFile(name,args):
+    #grabing file location based on name using our file_paths index 
     index = os.path.join(app.root_path,'database\\file_paths.json')
     with open(index, 'r') as raw_file:
         scriptStorage = json.loads(raw_file.read())
@@ -63,6 +66,7 @@ def runFile(name,args):
     try:
         #location = scriptStorage[name]["path"]
         location = 'scripts'
+        #since all of the scripts are currently uploaded to /scripts and we dont have time to reconfigure the html to use the better database, we will hardcode location here
     except KeyError:
         return "Unexpected Error: The script is either missing or has an invalid location"
     try:
