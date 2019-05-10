@@ -44,7 +44,8 @@ def upload_file():
             dbfile.truncate()
 
             # return redirect(url_for('uploaded_file', filename=file.filename))
-    return render_template('upload.html')
+    db = json.loads(open(os.path.join("database/programs.json")).read())
+    return render_template('upload.html' , db=db)
 
 
 @app.route('/uploads/<filename>')
