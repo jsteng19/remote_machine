@@ -116,4 +116,15 @@ function isScrollBottom() {
         <p>This is a paragraph</p>
       </div>
     </body>
+    <script>
+    $("#input").keyup(function(event) {
+        if (event.keyCode === 13) {
+            handleTextboxInput(document.getElementById('input').value)
+        }
+    });
+    function handleTextboxInput(text){
+      console.log("got here");
+      document.getElementById('spot2').innerHTML = text;
+    }
+    </script>
 </html>
