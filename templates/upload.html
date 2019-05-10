@@ -1,15 +1,29 @@
 <!DOCTYPE HTML>
 
 <title>Upload new File</title>
+
+
+
       <h1 class = "toptitle">Upload new files</h1>
       <hr class = "topline">
     <form method=post enctype=multipart/form-data>
       <input type='file' name='file'>
       <br>
-      <input type='text' name='description'>
+      <input type='text' name='description' placeholder='description'>
       <br>
       <input type=submit value=Upload>
     </form>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
 
 <html lang = "en">
   <head>
@@ -23,11 +37,11 @@
 
 
             <h1 class = "toptitle">Existing programs</h1>
-            <ul class = "a" style="list-style-type:disc;">
-              {% for program in db %}
-                <li>{{program["name"]}}</li>
-              {% endfor %}
-           </ul>
+
+        {% for program in db %}
+          <a href = "#" class = "button1"  onclick="window.location.href = 'uploads/{{program['name']}}';" id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
+        {% endfor %}
+
 
         <br>
 

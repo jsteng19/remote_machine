@@ -11,6 +11,7 @@ ALLOWED_EXTENSIONS = set(['py'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = b'teamkillerz'
 
 
 def allowed_file(filename):
@@ -23,7 +24,7 @@ def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
+            flash('No selected file')
             return redirect(request.url)
         file = request.files['file']
         # if user does not select file, browser also
@@ -42,6 +43,8 @@ def upload_file():
             dbfile.seek(0)
             json.dump(db, dbfile)
             dbfile.truncate()
+        else:
+            flash('Only .py files are valid')
 
             # return redirect(url_for('uploaded_file', filename=file.filename))
     db = json.loads(open(os.path.join("database/programs.json")).read())
@@ -50,7 +53,7 @@ def upload_file():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename + '.py')
 
 
 @app.route('/', methods=['GET', 'POST'])
