@@ -157,7 +157,7 @@ input[type="text"] {
 	animation-name: blink;
 	animation-duration: 800ms;
 	animation-iteration-count: infinite;
-	opacity: 2;
+	opacity: 0;
 }
 
 #inputDiv input:focus + i {
