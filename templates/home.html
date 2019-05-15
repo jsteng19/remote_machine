@@ -66,10 +66,14 @@ function isScrollBottom() {
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
         <h1 class = "toptitle">External Code Runner</h1>
       <hr class = "topline">
-
+      <div id="mySidenav" class="sidenav">
+            <a href="home.html" id="home">Home</a>
+            <a href="about.html" id="about">About</a>
+            <a href="#" id="contact">Contact</a>
+      </div>
         <div id ="buttdiv">
         {% for program in db %}
-          <a href = "#" class = "button1" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
+          <a href = "#" class = "button1" title = "{{program["description"]}}" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
         {% endfor %}
       </div>
         <div id ="inputLog">
