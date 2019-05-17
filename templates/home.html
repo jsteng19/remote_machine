@@ -14,9 +14,10 @@
 <!-- Enable Scrolling On Button Click -->
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
   <script type = "text/javascript">
-
+var pressed = false;
 function changeColor(buttonID, jsondb){
           document.getElementById(buttonID).classList.add('active');
+          pressed = true;
           for (var program in jsondb) {
             if (jsondb[program]["name"] != buttonID) {
               document.getElementById(jsondb[program]["name"]).classList.remove('active');
@@ -105,7 +106,14 @@ function isScrollBottom() {
         <br>
         <div id = "outer">
         <div id = "rundiv">
-        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
+          <script>
+            function checkProgramSelect(){
+              if(window.pressed == false){
+                alert("Select a program to run.");
+              }
+            }
+          </script>
+        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}}); checkProgramSelect()" id = "upload">RUN</a>
       </div>
     </div>
         <ul class="console">
