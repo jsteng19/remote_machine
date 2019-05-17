@@ -6,6 +6,12 @@
 
       <h1 class = "toptitle">Upload new files</h1>
       <hr class = "topline">
+      <div id="mySidenav" class="sidenav">
+            <a href="/" id="home">Home</a>
+            <a href="upload" id="uploadPage">Upload</a>
+            <a href="#" id="contact">TBD</a>
+      </div>
+<div class = "stuff">
     <form method=post enctype=multipart/form-data>
       <input type='file' name='file'>
       <br>
@@ -13,7 +19,7 @@
       <br>
       <input type=submit value=Upload>
     </form>
-
+</div>
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>

@@ -32,6 +32,11 @@ margin: 0;
   background-color: #ffd152;
 }
 
+#uploadPage {
+  top: 19%;
+  background-color: #ffd152;
+}
+
 #about {
   top: 19%;
   background-color: #ffd152;
@@ -218,4 +223,7 @@ li::before {
 margin:none;
 padding:none;
 content: ">>> ";
+}
+.stuff{
+margin-left:50px;
 }
