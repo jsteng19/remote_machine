@@ -67,14 +67,14 @@ def run():
 
 
 def runFile(name,args):
-    #grabing file location based on name using our file_paths index 
+    #grabing file location based on name using our file_paths index
     index = os.path.join(app.root_path,'database\\file_paths.json')
     with open(index, 'r') as raw_file:
         scriptStorage = json.loads(raw_file.read())
         print(scriptStorage[name])
     try:
         #location = scriptStorage[name]["path"]
-        location = 'scripts'
+        location = 'Scripts'
         #since all of the scripts are currently uploaded to /scripts and we dont have time to reconfigure the html to use the better database, we will hardcode location here
     except KeyError:
         return "Unexpected Error: The script is either missing or has an invalid location"
@@ -82,7 +82,7 @@ def runFile(name,args):
         file = importlib.import_module(location+"."+name)
         output = file.main(*args)
     except Exception as excpt:
-        output = "Unexpected Error: "+str(excpt)
+        output = "Unexpected Server Error: "+str(excpt)
     return output
 
 
