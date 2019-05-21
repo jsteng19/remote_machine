@@ -128,21 +128,24 @@ function isScrollBottom() {
     });
     function badConsle(text){
       output = []
-      text = 'run Fibonacci('
       if (text == 'help'){
         output.append('a list of programs currently available:');
         for (programs in jsondb) {
           output.append(prgorams.toString()+programs.name);
         }
       }
-      if (text.slice(0,4) == "run "){
-        handleTextboxInput(text.slice(0,4),slot1);
-        runProgramDirect(text.slice(5, text.indexOf('(')),4);
+      if (text.slice(0,4) == 'run '){
+        console.log(text.slice(4, text.indexOf('(')))
+        runProgramDirect(text.slice(4, text.indexOf('(')),4);
       }
+      else
+        handleTextboxInput("This commnad is not recongised. Type help for a list of commands.",spot1)
       return output;
     }
-
+// Handletextbox input will be replaced by the append list output function when our code is merged.
+// for now it is here for testing putposes
     function handleTextboxInput(text,id){
+      console.log(text)
       document.getElementById(id).innerHTML = text;
     }
 
