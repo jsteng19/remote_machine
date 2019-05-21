@@ -13,6 +13,7 @@
 
 <!-- Enable Scrolling On Button Click -->
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
   <script type = "text/javascript">
 
 function changeColor(buttonID, jsondb){
@@ -75,7 +76,7 @@ function isScrollBottom() {
         <div id ="inputLog">
           <ul class = "a">
                <li>Cmd 1</li>
-               <li> Cmd 2</li>
+               <li>Cmd 2</li>
                <li>Cmd 3</li>
                <li>Cmd 3</li>
                <li>Cmd 3</li>
@@ -90,7 +91,7 @@ function isScrollBottom() {
                <li>Cmd 3</li>
                <li>Cmd 3</li>
                <li>Cmd 3</li>
-               <li>Cmd 3</li>
+               <li id = slot1>Cmd 3</li>
            </ul>
 
         </div>
@@ -105,7 +106,7 @@ function isScrollBottom() {
       </div>
     </div>
         <ul class="console">
-             <li>Interactive console</li>
+             <li>For a full list of programs, type 'help'</li>
              <li> TYpED STUFF</li>
              <li>LiNe TwO</li>
              <li id = "output"> >>> </li>
@@ -119,12 +120,44 @@ function isScrollBottom() {
     <script>
     $("#input").keyup(function(event) {
         if (event.keyCode === 13) {
-            handleTextboxInput(document.getElementById('input').value)
+            //handleTextboxInput(document.getElementById('input').value)
+            badConsle(document.getElementById('input').value)
+
+
         }
     });
-    function handleTextboxInput(text){
-      console.log("got here");
-      document.getElementById('spot2').innerHTML = text;
+    function badConsle(text){
+      output = []
+      text = 'run Fibonacci('
+      if (text == 'help'){
+        output.append('a list of programs currently available:');
+        for (programs in jsondb) {
+          output.append(prgorams.toString()+programs.name);
+        }
+      }
+      if (text.slice(0,4) == "run "){
+        handleTextboxInput(text.slice(0,4),slot1);
+        runProgramDirect(text.slice(5, text.indexOf('(')),4);
+      }
+      return output;
     }
+
+    function handleTextboxInput(text,id){
+      document.getElementById(id).innerHTML = text;
+    }
+
+    function runProgramDirect(program,input) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("upload").innerHTML = this.responseText;
+        }
+      };
+      xmlhttp.open("POST", "run", true);
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      var data = new FormData();
+      xmlhttp.send("program=" + program + "&" + "input=" + input);
+    }
+
     </script>
 </html>
