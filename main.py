@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 #not all of these imports are
 app = Flask(__name__)
 
-UPLOAD_FOLDER = '/Users/jstenger/Documents/workspace/remote_machine/Scripts'
+UPLOAD_FOLDER = os.path.join(app.root_path, "Scripts")
 ALLOWED_EXTENSIONS = set(['py'])
 
 app = Flask(__name__)
