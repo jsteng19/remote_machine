@@ -143,7 +143,8 @@ input[type="text"] {
     left: 8%;
     width: 95%;
     margin-left: 1.5%;
-    font-size: 14px;
+    font-size: 15px;
+    font-family: "Courier New,Lucida Console,	Times New Roman";
 }
 
 /* START OF CURSOR CSS*/
@@ -177,9 +178,7 @@ input[type="text"] {
 #inputDiv{
 position:relative;
 background-color:#22252B;
-height:10%;
-border-style: inset;
-border-top: none;
+border-style:none;
 }
 #input:focus{
   outline-width: 0;
@@ -188,10 +187,11 @@ border-top: none;
   position:relative;
   background-color:#22252B;
   border-style: inset;
-  border-bottom: none;
-  height:10vh;
+  height:20vh;
   overflow-y: auto;
   padding-bottom: 3vh;
+  font-size: 15px;
+  font-family: "Courier New,Lucida Console,	Times New Roman";
   /*
   background-color:#343233;
 
@@ -209,13 +209,18 @@ border-top: none;
   font-weight:300;
   */
 }
-ul.a {
+#incon {
   list-style-type: none;
   margin:0;
   padding:0;
+  color:whitesmoke;
+  font-size:15px;
+  font-family: "Courier New,Lucida Console,	Times New Roman";
 }
+/*
 li::before {
 margin:none;
 padding:none;
 content: ">>> ";
 }
+*/

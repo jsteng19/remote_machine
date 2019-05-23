@@ -70,11 +70,13 @@ def run():
 
 
 def runFile(name,args):
-    #grabing file location based on name using our file_paths index 
-    #index = os.path.join(app.root_path,'database/file_paths.json')
-    # with open(index, 'r') as raw_file:
-    #     scriptStorage = json.loads(raw_file.read())
-    #     print(scriptStorage[name])
+
+    #grabing file location based on name using our file_paths index
+    index = os.path.join(app.root_path,'database\\file_paths.json')
+    with open(index, 'r') as raw_file:
+        scriptStorage = json.loads(raw_file.read())
+        print(scriptStorage[name])
+
     try:
         #location = scriptStorage[name]["path"]
         location = 'Scripts'
@@ -85,7 +87,7 @@ def runFile(name,args):
         file = importlib.import_module(location+"."+name)
         output = file.main(*args)
     except Exception as excpt:
-        output = "Unexpected Error: "+str(excpt)
+        output = "Unexpected Server Error: "+str(excpt)
     return output
 
 

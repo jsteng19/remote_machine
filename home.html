@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+  <head>
+    <meta charset = "utf-8"/>
+  </head>
+    <body>
+
+<!-- Console Div -->
+
+<!-- Arrow Div -->
+
+
+
+<!-- Enable Scrolling On Button Click -->
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type = "text/javascript">
+
+
+function changeColor(buttonID, jsondb){
+          document.getElementById(buttonID).classList.add('active');
+          for (var program in jsondb) {
+            if (jsondb[program]["name"] != buttonID) {
+              document.getElementById(jsondb[program]["name"]).classList.remove('active');
+            }
+          }
+}
+
+    function runProgram(jsondb){
+          for (var program in jsondb) {
+
+            if (document.getElementById(jsondb[program]["name"]).classList.contains("active")) {
+              var xmlhttp = new XMLHttpRequest();
+              xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("upload").innerHTML = this.responseText;
+                }
+              };
+              xmlhttp.open("POST", "run", true);
+              xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              var data = new FormData();
+              xmlhttp.send("program=" + jsondb[program]["name"] + "&" + "input=" + document.getElementById("input").value);
+            }
+          }
+     }
+
+    function uploadRemoveColor(jsondb){
+          for (var program in jsondb) {
+            document.getElementById(jsondb[program]["name"]).classList.remove('active');
+          }
+        }
+
+      </script>
+
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
+        <h1 class = "toptitle">External Code Runner</h1>
+      <hr class = "topline">
+
+        <div id ="buttdiv">
+        {% for program in db %}
+          <a href = "#" class = "button1" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
+        {% endfor %}
+      </div>
+        <div id ="inputLog">
+          <ul id = "incon">
+             </ul>
+
+           <div id ="inputDiv">
+           <input type = "text", id = "input">
+           <i id ="block"></i>
+         </div>
+
+        </div>
+
+        <br>
+        <div id = "outer">
+        <div id = "rundiv">
+        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
+      </div>
+    </div>
+
+      <div id = "test">
+      </div>
+      <script>
+      var counter = 0;
+      $("#input").keyup(function(event) {
+      if (event.keyCode === 13) {
+        counter = counter+1;
+          handleTextboxInput(document.getElementById('input').value);
+          appendList(document.getElementById('input').value);
+          this.value = " ";
+          if(counter > 3){
+            divScroll('inputLog');
+          }
+      }
+  });
+  function handleTextboxInput(text){
+    console.log("got here");
+  //  document.getElementById('spot2').innerHTML = text;
+  }
+
+  function appendList(input){
+    var newInput = (">>>"+input);
+    var node = document.createElement("LI");
+var inputNode = document.createTextNode(newInput);
+node.appendChild(inputNode);
+document.getElementById('incon').appendChild(node);
+}
+function appendListOut(output){
+  var node = document.createElement("LI");
+var outputNode = document.createTextNode(output);
+node.appendChild(outputNode);
+document.getElementById('incon').appendChild(node);
+}
+function divScroll(div){
+  var height = document.getElementById('inputDiv').offsetHeight;
+  console.log(height);
+  document.getElementById(div).scrollBy(0,height);
+
+}
+
+
+</script>
+    </body>
+</html>

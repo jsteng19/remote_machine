@@ -1,18 +1,19 @@
 <!DOCTYPE HTML>
-<html lang = "en">
-  <head>
-    <meta charset = "utf-8"/>
-  </head>
-    <body>
+  <html lang = "en">
+    <head>
+      <meta charset = "utf-8"/>
+     </head>
+     <body>
 
-<!-- Console Div -->
+     <!-- Console Div -->
 
-<!-- Arrow Div -->
+     <!-- Arrow Div -->
 
 
 
-<!-- Enable Scrolling On Button Click -->
+     <!-- Enable Scrolling On Button Click -->
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
   <script type = "text/javascript">
 var pressed = false;
 function changeColor(buttonID, jsondb){
@@ -23,120 +24,145 @@ function changeColor(buttonID, jsondb){
               document.getElementById(jsondb[program]["name"]).classList.remove('active');
             }
           }
+
 }
 
-    function runProgram(jsondb){
-          for (var program in jsondb) {
-
-            if (document.getElementById(jsondb[program]["name"]).classList.contains("active")) {
-              var xmlhttp = new XMLHttpRequest();
-              xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  document.getElementById("upload").innerHTML = this.responseText;
-                }
-              };
-              xmlhttp.open("POST", "run", true);
-              xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-              var data = new FormData();
-              xmlhttp.send("program=" + jsondb[program]["name"] + "&" + "input=" + document.getElementById("input").value);
-            }
-          }
-     }
-
-    function uploadRemoveColor(jsondb){
-          for (var program in jsondb) {
-            document.getElementById(jsondb[program]["name"]).classList.remove('active');
-          }
+function runProgram(jsondb){
+  for (var program in jsondb) {
+    if (document.getElementById(jsondb[program]["name"]).classList.contains("active")) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("upload").innerHTML = this.responseText;
+        }
+      };
+      xmlhttp.open("POST", "run", true);
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      var data = new FormData();
+      xmlhttp.send("program=" + jsondb[program]["name"] + "&" + "input=" + document.getElementById("input").value);
     }
-
-$('inputDiv').scroll(function(){
-  if(isScrollBottom()){
-    document.getElementById("inputDiv").style.opacity = 1;
-    console.log("Its at bottom");
   }
-});
-
-function isScrollBottom() {
-  var elementHeight = $('inputDiv').height();
-  var scrollPosition = $('inputDiv').height() + $(div).scrollTop();
-  return (elementHeight == scrollPosition);
 }
-      </script>
+
+function uploadRemoveColor(jsondb){
+  for (var program in jsondb) {
+    document.getElementById(jsondb[program]["name"]).classList.remove('active');
+  }
+}
+
+</script>
 
 
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
-        <h1 class = "toptitle">External Code Runner</h1>
-      <hr class = "topline">
-      <div id="mySidenav" class="sidenav">
+             <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
+             <h1 class = "toptitle">External Code Runner</h1>
+           <hr class = "topline">
+           <div id="mySidenav" class="sidenav">
             <a href="/" id="home">Home</a>
             <a href="upload" id="uploadPage">Upload</a>
             <a href="#" id="contact">TBD</a>
-      </div>
-        <div id ="buttdiv">
-        {% for program in db %}
-          <a href = "#" class = "button1" title = "{{program["description"]}}" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
-        {% endfor %}
-      </div>
-        <div id ="inputLog">
-          <ul class = "a">
-               <li>Cmd 1</li>
-               <li> Cmd 2</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-               <li>Cmd 3</li>
-           </ul>
+           </div>
+       
+             <div id ="buttdiv">
+             {% for program in db %}
+               <a href = "#" class = "button1" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
+             {% endfor %}
+           </div>
+             <div id ="inputLog">
+               <ul id = "incon">
+                  </ul>
 
-        </div>
-        <div id ="inputDiv">
-        <input type = "text", id = "input">
-        <i></i>
-      </div>
-        <br>
-        <div id = "outer">
-        <div id = "rundiv">
-          <script>
+                <div id ="inputDiv">
+                <input type = "text", id = "input">
+                <i id ="block"></i>
+              </div>
+
+             </div>
+
+             <br>
+             <div id = "outer">
+             <div id = "rundiv">
+               <script>
             function checkProgramSelect(){
               if(window.pressed == false){
                 alert("Select a program to run.");
-              }
-            }
-          </script>
-        <a href = "#" class = "button1" onclick ="runProgram({{jsondb}}); checkProgramSelect()" id = "upload">RUN</a>
-      </div>
-    </div>
-        <ul class="console">
-             <li>Interactive console</li>
-             <li> TYpED STUFF</li>
-             <li>LiNe TwO</li>
-             <li id = "output"> >>> </li>
-         </ul>
+                  }
+                }
+              </script>
+             <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
+           </div>
+         </div>
+       
+           <div id = "test">
+           </div>
+        <script>
+           var counter = 0;
+           $("#input").keyup(function(event) {
+           if (event.keyCode === 13) {
+             counter = counter+1;
+               textConsole(document.getElementById('input').value);
+               appendList(document.getElementById('input').value);
+               this.value = " ";
+               if(counter > 3){
+                 divScroll('inputLog');
+               }
+           }
+       });
 
-      </div>
-      <div id = "test">
-        <p>This is a paragraph</p>
-      </div>
-    </body>
-    <script>
-    $("#input").keyup(function(event) {
-        if (event.keyCode === 13) {
-            handleTextboxInput(document.getElementById('input').value)
-        }
-    });
-    function handleTextboxInput(text){
-      console.log("got here");
-      document.getElementById('spot2').innerHTML = text;
+    function textConsole(text){
+      jsondb = "{{jsondb}}"
+      colsole.log(text)
+      output = []
+      if (text == '') {
+        appendList('')
+      }
+      if (text == 'help'){
+        output.push('A list of programs currently available:');
+        for (programs in jsondb) {
+          output.push(programs.toString()+programs.name);
+       }
+        appendListOut(output);
+      }
+      if (text.slice(0,4) == 'run '){
+        console.log(text.slice(4, text.indexOf('(')))
+        runProgramDirect(text.slice(4, text.indexOf('(')),4);
+      }
+      else
+        appendListOut("This command is not recognized. Type help for a list of commands.")
     }
+
+    function runProgramDirect(program,input) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("
+                                  ").innerHTML = this.responseText;
+        }
+      };
+      xmlhttp.open("POST", "run", true);
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      var data = new FormData();
+      xmlhttp.send("program=" + program + "&" + "input=" + input);
+    }
+  function appendList(input){
+      var newInput = (">>>"+input);
+      var node = document.createElement("LI");
+      var inputNode = document.createTextNode(newInput);
+      node.appendChild(inputNode);
+      document.getElementById('incon').appendChild(node);
+  }
+  function appendListOut(output){
+    var node = document.createElement("LI");
+    var outputNode = document.createTextNode(output);
+    node.appendChild(outputNode);
+    document.getElementById('incon').appendChild(node);
+    console.log("Running appendListOut")
+  }
+  function divScroll(div){
+    var height = document.getElementById('inputDiv').offsetHeight;
+    console.log(height);
+    document.getElementById(div).scrollBy(0,height);
+
+  }
+
     </script>
 </html>
