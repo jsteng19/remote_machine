@@ -85,7 +85,7 @@ function uploadRemoveColor(jsondb){
            $("#input").keyup(function(event) {
            if (event.keyCode === 13) {
              counter = counter+1;
-               badConsle(document.getElementById('input').value);
+               textConsole(document.getElementById('input').value);
                appendList(document.getElementById('input').value);
                this.value = " ";
                if(counter > 3){
@@ -94,13 +94,19 @@ function uploadRemoveColor(jsondb){
            }
        });
 
-    function badConsle(text){
+    function textConsole(text){
+      jsondb = "{{jsondb}}"
+      colsole.log(text)
       output = []
+      if (text == '') {
+        appendList('')
+      }
       if (text == 'help'){
         output.push('A list of programs currently available:');
         for (programs in jsondb) {
-          output.push(prgorams.toString()+programs.name);
+          output.push(programs.toString()+programs.name);
         }
+        appendListOut(output);
       }
       if (text.slice(0,4) == 'run '){
         console.log(text.slice(4, text.indexOf('(')))
@@ -108,7 +114,6 @@ function uploadRemoveColor(jsondb){
       }
       else
         appendListOut("This commnad is not recongised. Type help for a list of commands.")
-      return output;
     }
 // Handletextbox input will be replaced by the append list output function when our code is merged.
 // for now it is here for testing putposes
