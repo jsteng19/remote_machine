@@ -138,14 +138,14 @@ function uploadRemoveColor(jsondb){
            }
        });
 
-    $("#input").keyup(function(event) {
-        if (event.keyCode === 13) {
-            //handleTextboxInput(document.getElementById('input').value)
-            badConsle(document.getElementById('input').value)
-
-
-        }
-    });
+    // $("#input").keyup(function(event) {
+    //     if (event.keyCode === 13) {
+    //         //handleTextboxInput(document.getElementById('input').value)
+    //         badConsle(document.getElementById('input').value)
+    //
+    //
+    //     }
+    // });
     function badConsle(text){
       output = []
       if (text == 'help'){
@@ -164,10 +164,10 @@ function uploadRemoveColor(jsondb){
     }
 // Handletextbox input will be replaced by the append list output function when our code is merged.
 // for now it is here for testing putposes
-    function handleTextboxInput(text,id){
-      console.log(text)
-      document.getElementById(id).innerHTML = text;
-    }
+    // function handleTextboxInput(text,id){
+    //   console.log(text)
+    //   document.getElementById(id).innerHTML = text;
+    // }
 
     function runProgramDirect(program,input) {
       var xmlhttp = new XMLHttpRequest();
@@ -193,6 +193,7 @@ function uploadRemoveColor(jsondb){
     var outputNode = document.createTextNode(output);
     node.appendChild(outputNode);
     document.getElementById('incon').appendChild(node);
+    console.log("Running appendListOut")
   }
   function divScroll(div){
     var height = document.getElementById('inputDiv').offsetHeight;
