@@ -13,16 +13,18 @@
 
      <!-- Enable Scrolling On Button Click -->
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script type = "text/javascript">
 
-
+  <script type = "text/javascript">
+var pressed = false;
 function changeColor(buttonID, jsondb){
-  document.getElementById(buttonID).classList.add('active');
-  for (var program in jsondb) {
-    if (jsondb[program]["name"] != buttonID) {
-      document.getElementById(jsondb[program]["name"]).classList.remove('active');
-    }
-  }
+          document.getElementById(buttonID).classList.add('active');
+          pressed = true;
+          for (var program in jsondb) {
+            if (jsondb[program]["name"] != buttonID) {
+              document.getElementById(jsondb[program]["name"]).classList.remove('active');
+            }
+          }
+
 }
 
 function runProgram(jsondb){
@@ -54,7 +56,12 @@ function uploadRemoveColor(jsondb){
              <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css')}}">
              <h1 class = "toptitle">External Code Runner</h1>
            <hr class = "topline">
-
+           <div id="mySidenav" class="sidenav">
+            <a href="/" id="home">Home</a>
+            <a href="upload" id="uploadPage">Upload</a>
+            <a href="#" id="contact">TBD</a>
+           </div>
+       
              <div id ="buttdiv">
              {% for program in db %}
                <a href = "#" class = "button1" onclick = 'changeColor("{{program["name"]}}", {{jsondb}})' id = '{{program["name"]}}' style = 'margin:5%; justify-content: center;'> {{program["name"]}} </a>
@@ -74,10 +81,17 @@ function uploadRemoveColor(jsondb){
              <br>
              <div id = "outer">
              <div id = "rundiv">
+               <script>
+            function checkProgramSelect(){
+              if(window.pressed == false){
+                alert("Select a program to run.");
+                  }
+                }
+              </script>
              <a href = "#" class = "button1" onclick ="runProgram({{jsondb}})" id = "upload">RUN</a>
            </div>
          </div>
-
+       
            <div id = "test">
            </div>
         <script>
@@ -105,7 +119,7 @@ function uploadRemoveColor(jsondb){
         output.push('A list of programs currently available:');
         for (programs in jsondb) {
           output.push(programs.toString()+programs.name);
-        }
+       }
         appendListOut(output);
       }
       if (text.slice(0,4) == 'run '){
@@ -113,20 +127,15 @@ function uploadRemoveColor(jsondb){
         runProgramDirect(text.slice(4, text.indexOf('(')),4);
       }
       else
-        appendListOut("This commnad is not recongised. Type help for a list of commands.")
+        appendListOut("This command is not recognized. Type help for a list of commands.")
     }
-// Handletextbox input will be replaced by the append list output function when our code is merged.
-// for now it is here for testing putposes
-    // function handleTextboxInput(text,id){
-    //   console.log(text)
-    //   document.getElementById(id).innerHTML = text;
-    // }
 
     function runProgramDirect(program,input) {
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("upload").innerHTML = this.responseText;
+          document.getElementById("
+                                  ").innerHTML = this.responseText;
         }
       };
       xmlhttp.open("POST", "run", true);
